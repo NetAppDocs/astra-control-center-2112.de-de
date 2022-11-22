@@ -1,0 +1,311 @@
+---
+sidebar: sidebar 
+permalink: release-notes/known-issues.html 
+keywords: astra, control center, bugs, known issues, problems 
+summary: Bekannte Probleme identifizieren Probleme, die Sie daran hindern könnten, diese Produktversion erfolgreich zu verwenden. 
+---
+= Bekannte Probleme
+:hardbreaks:
+:allow-uri-read: 
+:source-highlighter: highlight.js
+:icons: font
+:imagesdir: ../media/release-notes/
+
+
+Bekannte Probleme identifizieren Probleme, die Sie daran hindern könnten, diese Produktversion erfolgreich zu verwenden.
+
+Die folgenden bekannten Probleme wirken sich auf die aktuelle Version aus:
+
+*  with user-defined label goes into "removed" state
+*  to stop running app backup
+*  app restore from backup Trident creates a larger PV than the original PV
+*  performance impacted by large persistent volumes
+*  clones fail using a specific version of PostgreSQL
+*  clones fail when using Service Account level OCP Security Context Constraints (SCC)
+*  buckets between instances of Astra Control Center causes failures
+*  a bucket provider type with credentials for another type causes data protection failures
+*  and snapshots might not be retained during removal of an Astra Control Center instance
+* link:known-issues.html#clone-operation-cant-use-other-buckets-besides-the-default["Der Klonvorgang kann außer dem Standard keine anderen Buckets verwenden"]
+*  a cluster with Astra Control Center fails when default kubeconfig file contains more than one context
+*  internal service error when attempting Trident app data management
+*  app execution hook scripts time out and cause post-snapshot scripts not to execute
+* link:known-issues.html#cant-determine-asup-tar-bundle-status-in-scaled-environment["In skalierten Umgebungen kann der ASUP tar-Bundle-Status nicht ermittelt werden"]
+*  eventually begin to fail when using external-snapshotter version 4.2.0
+*  app restore operations in the same namespace can fail
+*  fails if source version uses a container image registry that does not require authentication and target version uses a container image registry that requires authentication
+*  of Astra Control Center fails to clean up the monitoring-operator pod on the managed cluster
+*  of Astra Control Center fails to clean up Traefik CRDs
+
+
+
+
+== App mit benutzerdefiniertem Label geht in den Status „entfernt“
+
+Wenn Sie eine App mit einem nicht vorhandenen k8s-Label definieren, erstellt, verwaltet und entfernt die App sofort. Um dies zu vermeiden, fügen Sie das k8s-Etikett zu Pods und Ressourcen hinzu, nachdem die App vom Astra Control Center verwaltet wurde.
+
+
+
+== App-Backup kann nicht beendet werden
+
+Es gibt keine Möglichkeit, ein ausgelaufes Backup zu stoppen. Wenn Sie das Backup löschen müssen, warten Sie, bis es abgeschlossen ist, und befolgen Sie die Anweisungen unter link:../use/protect-apps.html#delete-backups["Backups löschen"]. Verwenden Sie zum Löschen eines fehlgeschlagenen Backups den link:https://docs.netapp.com/us-en/astra-automation/index.html["Astra Control API"^].
+
+
+
+== Trident erstellt während der Wiederherstellung der App aus einem Backup ein größeres PV als das ursprüngliche PV
+
+Wenn Sie ein persistentes Volume nach der Erstellung eines Backups skalieren und dann aus diesem Backup wiederherstellen, wird die Größe des persistenten Volumes an die neue PV-Größe angepasst, anstatt die Backup-Größe zu verwenden.
+
+
+
+== Performance-Beeinträchtigung des Klons durch große persistente Volumes
+
+Klone von sehr großen und verbrauchten persistenten Volumes können zeitweise langsam sein und sind vom Cluster-Zugriff auf den Objektspeicher abhängig. Wenn der Klon aufgehängt wurde und seit mehr als 30 Minuten keine Daten kopiert wurden, beendet Astra Control die Klonaktion.
+
+
+
+== Applikationsklone können nicht mit einer bestimmten Version von PostgreSQL verwendet werden
+
+App-Klone innerhalb desselben Clusters schlagen konsequent mit dem Bitnami PostgreSQL 11.5.0 Diagramm fehl. Um erfolgreich zu klonen, verwenden Sie eine frühere oder höhere Version des Diagramms.
+
+
+
+== Anwendungsklone sind bei der Verwendung von OCP-Sicherheitskontextsensitonen (SCC) auf Servicekontoebene fehlgeschlagen.
+
+Ein Applikationsklon kann fehlschlagen, wenn die ursprünglichen Einschränkungen des Sicherheitskontexts auf der Service-Account-Ebene innerhalb des Namespace auf dem OCP-Cluster konfiguriert sind. Wenn der Anwendungsklon ausfällt, wird er im Bereich Managed Applications im Astra Control Center mit dem Status angezeigt `Removed`. Siehe https://kb.netapp.com/Advice_and_Troubleshooting/Cloud_Services/Astra/Application_clone_is_failing_for_an_application_in_Astra_Control_Center["knowledgebase-Artikel"] Finden Sie weitere Informationen.
+
+
+
+== Applikationsklone scheitern, nachdem eine Applikation mit einer festgelegten Storage-Klasse implementiert wurde
+
+Nachdem eine Applikation mit einer Storage-Klasse bereitgestellt wurde (z. B. `helm install ...-set global.storageClass=netapp-cvs-perf-extreme`). Nachfolgende Klonversuche der Applikation erfordern, dass das Ziel-Cluster die ursprünglich angegebene Storage-Klasse hat. Das Klonen einer Applikation mit einer explizit festgelegten Storage-Klasse auf ein Cluster ohne dieselbe Storage-Klasse schlägt fehl. Es gibt keine Wiederherstellungsschritte in diesem Szenario.
+
+
+
+== Die Wiederverwendung von Buckets zwischen den Instanzen des Astra Control Centers verursacht Fehler
+
+Wenn Sie versuchen, einen Bucket zu verwenden, der von einer anderen oder einer früheren Installation von Astra Control Center verwendet wird, werden Backup- und Restore-Vorgänge fehlschlagen. Sie müssen einen anderen Eimer verwenden oder den zuvor verwendeten Eimer vollständig reinigen. Sie können die Buckets nicht zwischen Instanzen des Astra Control Center teilen.
+
+
+
+== Wenn Sie einen Bucket-Provider-Typ mit Zugangsdaten für einen anderen Typ auswählen, führt dies zu Fehlern bei der Datensicherung
+
+Wenn Sie einen Bucket hinzufügen, wählen Sie den richtigen Bucket-Provider aus und geben Sie die richtigen Anmeldedaten für diesen Provider ein. Beispielsweise akzeptiert die UI NetApp ONTAP S3 als Typ und akzeptiert StorageGRID-Anmeldedaten. Dies führt jedoch dazu, dass alle künftigen Applikations-Backups und -Wiederherstellungen, die diesen Bucket verwenden, fehlschlagen.
+
+
+
+== Backups und Snapshots werden während der Entfernung einer Astra Control Center-Instanz nicht aufbewahrt
+
+Wenn Sie über eine Evaluierungslizenz verfügen, sollten Sie Ihre Konto-ID speichern, um Datenverlust im Falle eines Ausfalls des Astra Control Center zu vermeiden, wenn Sie ASUPs nicht senden.
+
+
+
+== Der Klonvorgang kann neben dem Standard keine anderen Buckets verwenden
+
+Während eines Applikations-Backups oder Applikations-Restores können Sie optional eine Bucket-ID angeben. Ein Applikationsklonvorgang verwendet jedoch immer den definierten Standard-Bucket. Es besteht keine Möglichkeit, die Buckets für einen Klon zu ändern. Wenn Sie die Kontrolle darüber haben möchten, welcher Bucket verwendet wird, können Sie entweder link:../use/manage-buckets.html#edit-a-bucket["Ändern Sie den Bucket-Standard"] Oder machen Sie ein link:../use/protect-apps.html#create-a-backup["Backup"] Gefolgt von A link:../use/restore-apps.html["Wiederherstellen"] Separat.
+
+
+
+== Das Verwalten eines Clusters mit Astra Control Center schlägt fehl, wenn die standardmäßige kubeconfig-Datei mehr als einen Kontext enthält
+
+Sie können ein kubeconfig nicht mit mehr als einem Cluster und Kontext darin verwenden. Siehe link:https://kb.netapp.com/Advice_and_Troubleshooting/Cloud_Services/Astra/Managing_cluster_with_Astra_Control_Center_may_fail_when_using_default_kubeconfig_file_contains_more_than_one_context["knowledgebase-Artikel"] Finden Sie weitere Informationen.
+
+
+
+== 500 interner Servicefehler beim Versuch, das Management von Trident-App-Daten zu starten
+
+Wenn Trident auf einem App-Cluster offline geschaltet wird (und wieder online geschaltet wird) und 500 interne Servicefehler auftreten, wenn versucht wird, die App-Datenmanagement zu managen, starten Sie alle Kubernetes-Nodes im App-Cluster neu, um die Funktionalität wiederherzustellen.
+
+
+
+== Hook-Skripte für benutzerdefinierte Anwendungsausführungen haben Zeit und verursachen, dass Skripte nach dem Snapshot nicht ausgeführt werden
+
+Wenn ein Execution Hook länger als 25 Minuten dauert, schlägt der Hook fehl und erstellt einen Ereignisprotokolleintrag mit einem Rückgabecode von „N/A“. Jeder betroffene Snapshot hat eine Zeitüberschreitung und wird als fehlgeschlagen markiert, wobei ein resultierende Eintrag im Ereignisprotokoll das Timeout angibt.
+
+Da Testsuitehingel die Funktionalität der Anwendung, für die sie ausgeführt werden, oft reduzieren oder vollständig deaktivieren, sollten Sie immer versuchen, die Zeit zu minimieren, die Ihre benutzerdefinierten Testausführungshaken für die Ausführung benötigt.
+
+
+
+== In skalierten Umgebungen kann der ASUP tar-Paketstatus nicht ermittelt werden
+
+Während der ASUP Sammlung wird der Status des Bundles in der UI als entweder gemeldet `collecting` Oder `done`. Die Sammlung kann in großen Umgebungen bis zu einer Stunde dauern. Während des ASUP Downloads reicht die Übertragungsgeschwindigkeit der Netzwerkdatei für das Bundle möglicherweise nicht aus, und der Download kann nach 15 Minuten ohne Angabe im UI außerhalb der Zeit erfolgen. Download-Probleme hängen von der Größe des ASUP, der skalierten Cluster-Größe und ab, ob die Erfassungszeit das siebentägige Limit übersteigt.
+
+
+
+== Snapshots beginnen schließlich beim Einsatz von External-Snapshotter Version 4.2.0 fehlschlagen
+
+Wenn Sie Kubernetes Snapshot-Controller (auch bekannt als externer Snapshot) Version 4.2.0 mit Kubernetes 1.20 oder 1.21 verwenden, können Snapshots irgendwann fehlschlagen. Um dies zu verhindern, verwenden Sie ein anderes https://kubernetes-csi.github.io/docs/snapshot-controller.html["Unterstützte Version"^] Von externen Snapshots, wie Version 4.2.1, mit Kubernetes Versionen 1.20 oder 1.21.
+
+
+
+== Gleichzeitige Applikations-Wiederherstellungsvorgänge können im selben Namespace fehlschlagen
+
+Wenn Sie versuchen, eine oder mehrere einzeln gemanagte Apps innerhalb eines Namespace gleichzeitig wiederherzustellen, können die Wiederherstellungsvorgänge nach einem langen Zeitraum fehlschlagen. Stellen Sie jede Anwendung einzeln als Workaround wieder her.
+
+
+
+== Das Upgrade schlägt fehl, wenn die Quellversion eine Container-Image-Registrierung verwendet, die keine Authentifizierung erfordert. Die Zielversion verwendet eine Container-Image-Registrierung, die eine Authentifizierung erfordert
+
+Wenn Sie ein Astra Control Center-System aktualisieren, das eine Registrierung verwendet, die keine Authentifizierung auf eine neuere Version erfordert, die eine Registrierung verwendet, die eine Authentifizierung erfordert, schlägt das Upgrade fehl. Führen Sie als Workaround die folgenden Schritte aus:
+
+. Melden Sie sich bei einem Host an, der Netzwerkzugriff auf den Astra Control Center-Cluster hat.
+. Stellen Sie sicher, dass der Host über die folgende Konfiguration verfügt:
++
+** `kubectl` Version 1.19 oder höher ist installiert
+** Die Umgebungsvariable KUBECONFIG wird auf die Datei kubeconfigfile für den Astra Control Center-Cluster gesetzt
+
+
+. Führen Sie das folgende Skript aus:
++
+[source, shell]
+----
+
+namespace="<netapp-acc>"
+statefulsets=("polaris-vault" "polaris-mongodb" "influxdb2" "nats" "loki")
+for ss in ${statefulsets[@]}; do
+	existing=$(kubectl get -n ${namespace} statefulsets.apps ${ss} -o jsonpath='{.spec.template.spec.imagePullSecrets}')
+	if [ "${existing}" = "[{}]" ] || [ "${existing}" = "[{},{},{}]" ]; then
+		kubectl patch -n ${namespace} statefulsets.apps ${ss} --type merge --patch '{"spec": {"template": {"spec": {"imagePullSecrets": []}}}}'
+	else
+		echo "${ss} not patched"
+	fi
+done
+----
++
+Sie sollten eine Ausgabe wie die folgende sehen:
+
++
+[listing]
+----
+statefulset.apps/polaris-vault patched
+statefulset.apps/polaris-mongodb patched
+statefulset.apps/influxdb2 patched
+statefulset.apps/nats patched
+statefulset.apps/loki patched
+----
+. Fahren Sie mit dem Upgrade fort link:../use/upgrade-acc.html#add-the-images-to-your-local-registry["Upgrade-Anweisungen für das Astra Control Center"].
+
+
+
+
+== Bei der Deinstallation des Astra Control Center wird der Monitor-Operator POD im Managed Cluster nicht bereinigt
+
+Wenn Sie das Management Ihrer Cluster nicht rückgängig gemacht haben, bevor Sie Astra Control Center deinstalliert haben, können Sie die Pods im netapp-Monitoring Namespace und den Namespace manuell mit den folgenden Befehlen löschen:
+
+.Schritte
+. Löschen `acc-monitoring` Agent:
++
+[listing]
+----
+oc delete agents acc-monitoring -n netapp-monitoring
+----
++
+Ergebnis:
+
++
+[listing]
+----
+agent.monitoring.netapp.com "acc-monitoring" deleted
+----
+. Löschen Sie den Namespace:
++
+[listing]
+----
+oc delete ns netapp-monitoring
+----
++
+Ergebnis:
+
++
+[listing]
+----
+namespace "netapp-monitoring" deleted
+----
+. Bestätigen der entfernten Ressourcen:
++
+[listing]
+----
+oc get pods -n netapp-monitoring
+----
++
+Ergebnis:
+
++
+[listing]
+----
+No resources found in netapp-monitoring namespace.
+----
+. Bestätigen Sie, dass der Monitoring Agent entfernt wurde:
++
+[listing]
+----
+oc get crd|grep agent
+----
++
+Beispielergebnis:
+
++
+[listing]
+----
+agents.monitoring.netapp.com                     2021-07-21T06:08:13Z
+----
+. Informationen zur benutzerdefinierten Ressourcendefinition löschen:
++
+[listing]
+----
+oc delete crds agents.monitoring.netapp.com
+----
++
+Ergebnis:
+
++
+[listing]
+----
+customresourcedefinition.apiextensions.k8s.io "agents.monitoring.netapp.com" deleted
+----
+
+
+
+
+== Bei der Deinstallation von Astra Control Center werden die Traefik CRDs nicht bereinigt
+
+Sie können die Traefik-CRDs manuell löschen. CRDs sind globale Ressourcen, und das Löschen kann sich auf andere Anwendungen auf dem Cluster auswirken.
+
+.Schritte
+. Führen Sie die auf dem Cluster installierten Traefik-CRDs auf:
++
+[listing]
+----
+kubectl get crds |grep -E 'traefik'
+----
++
+Antwort
+
++
+[listing]
+----
+ingressroutes.traefik.containo.us             2021-06-23T23:29:11Z
+ingressroutetcps.traefik.containo.us          2021-06-23T23:29:11Z
+ingressrouteudps.traefik.containo.us          2021-06-23T23:29:12Z
+middlewares.traefik.containo.us               2021-06-23T23:29:12Z
+middlewaretcps.traefik.containo.us            2021-06-23T23:29:12Z
+serverstransports.traefik.containo.us         2021-06-23T23:29:13Z
+tlsoptions.traefik.containo.us                2021-06-23T23:29:13Z
+tlsstores.traefik.containo.us                 2021-06-23T23:29:14Z
+traefikservices.traefik.containo.us           2021-06-23T23:29:15Z
+----
+. Löschen Sie die CRDs:
++
+[listing]
+----
+kubectl delete crd ingressroutes.traefik.containo.us ingressroutetcps.traefik.containo.us ingressrouteudps.traefik.containo.us middlewares.traefik.containo.us serverstransports.traefik.containo.us tlsoptions.traefik.containo.us tlsstores.traefik.containo.us traefikservices.traefik.containo.us middlewaretcps.traefik.containo.us
+----
+
+
+
+
+== Weitere Informationen
+
+* link:../release-notes/resolved-issues.html["Behobene Probleme"]
+* link:../release-notes/known-issues-ads.html["Bekannte Probleme bei der Prüfung des Astra Data Store und dieser Version des Astra Control Center"]
+* link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
+

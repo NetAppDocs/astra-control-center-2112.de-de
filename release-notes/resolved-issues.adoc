@@ -1,0 +1,59 @@
+---
+sidebar: sidebar 
+permalink: release-notes/resolved-issues.html 
+keywords: astra, control center, fixed bugs, fixes, resolved issues 
+summary: Bekannte Probleme identifizieren Probleme, die Sie daran hindern könnten, diese Produktversion erfolgreich zu verwenden. 
+---
+= Behobene Probleme
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/release-notes/
+
+
+Diese Probleme wurden in dieser Version des Produkts behoben.
+
+
+
+== Zusätzliche Backups werden im Rahmen des geplanten Backups aufbewahrt
+
+Manchmal werden ein oder mehrere Backups im Astra Control Center über die im Backup-Zeitplan festgelegte Anzahl hinaus aufbewahrt. Diese zusätzlichen Backups sollten im Rahmen eines geplanten Backups gelöscht werden, aber nicht gelöscht werden und in einem stecken bleiben `pending` Bundesland.
+
+
+
+== Backup oder Klon schlägt bei Anwendungen fehl, die PVCs mit Dezimaleinheiten im Astra Control Center verwenden
+
+Volumes, die mit Dezimaleinheiten erstellt wurden, scheitern mit dem Astra Control Center Backup- oder Klonprozess.
+
+
+
+== Die UI des Astra Control Center zeigt nur langsam Änderungen an Applikationsressourcen, z. B. Änderungen am persistenten Volume
+
+Nach einer Datensicherungsoperation (Klonen, Backup, Restore) und einer anschließenden Anpassung des persistenten Volumes beträgt die Verzögerung bis zu zwanzig Minuten, bevor die neue Volume-Größe in der UI angezeigt wird. Diese Verzögerung in der Benutzeroberfläche kann auch auftreten, wenn App-Ressourcen hinzugefügt oder geändert werden. In diesem Fall ist eine Datensicherung innerhalb weniger Minuten erfolgreich und Sie können mit der Management Software für das Storage-Backend die Änderung der Volume-Größe bestätigen.
+
+
+
+== Falsche Cluster Role Binding, die von Astra Control Center zur individuellen Ressourcendefinition während der Installation erstellt wurde
+
+In diesem Release ist der Patch zur Korrektur der Cluster-Rollenbindung während der Installation nicht mehr erforderlich.
+
+
+
+== ASUP-Sammlung ist in einem Erzeugen oder Hochladen enthalten
+
+Wenn ein ASUP Pod angehalten oder neu gestartet wird, hängt möglicherweise eine ASUP Sammlung in einem Generierung- oder Upload-Status ab.
+
+
+
+== Vom Betreiber bereitgestellte Applikationen und Namespaces
+
+Ein Operator und die von ihm verwendete App müssen denselben Namespace verwenden. Astra Control unterstützt nur eine vom Betreiber bereitgestellte Applikation pro Namespace.
+
+
+
+== Weitere Informationen
+
+* link:../release-notes/known-issues.html["Bekannte Probleme"]
+* link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
+* link:../release-notes/known-issues-ads.html["Bekannte Probleme mit der Vorschau des Astra Data Stores und dieser Version des Astra Control Center"]
+

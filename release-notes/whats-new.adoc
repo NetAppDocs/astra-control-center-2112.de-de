@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: release-notes/whats-new.html 
+keywords: 'what"s new, bugs, bug fixes, new features, enhancements' 
+summary: NetApp aktualisiert regelmäßig das Astra Control Center, um Ihnen neue Funktionen, Verbesserungen und Fehlerbehebungen zu bieten. 
+---
+= Was ist neu in dieser Version des Astra Control Center
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/release-notes/
+
+
+Wir freuen uns, die neueste Version 21.12 des Astra Control Center ankündigen zu können.
+
+
+
+== Bis 14. Dezember 2021 (21.12)
+
+Aktualisierte Version des Astra Control Center.
+
+.Neue Funktionen und Support
+* link:../use/restore-apps.html["Applikationswiederherstellung"]
+* link:../use/execution-hooks.html["Ausführungshaken"]
+* link:../get-started/requirements.html#supported-app-installation-methods["Unterstützung für Applikationen, die mit Betreibern im Namespace-Umfang implementiert wurden"]
+* link:../get-started/requirements.html["Zusätzliche Unterstützung für Upstream Kubernetes und Rancher"]
+* link:../get-started/setup_overview.html#add-a-storage-backend["Astra Data Store: Backend-Management und -Monitoring in der Vorschau"]
+* link:../use/upgrade-acc.html["Astra Control Center-Upgrades"]
+* link:../get-started/acc_operatorhub_install.html["Red hat OperatorHub-Option zur Installation"]
+
+
+.Behobene Probleme
+* link:../release-notes/resolved-issues.html["Probleme in diesem Release wurden behoben"]
+
+
+.Bekannte Probleme und Einschränkungen
+* link:../release-notes/known-issues.html["Bekannte Probleme in diesem Release"]
+* link:../release-notes/known-issues-ads.html["Bekannte Probleme mit der Vorschau des Astra Data Stores und dieser Version des Astra Control Center"]
+* link:../release-notes/known-limitations.html["Bekannte Einschränkungen für diese Version"]
+
+
+
+
+== August 5 2021 (21.08)
+
+Erste Version des Astra Control Center.
+
+* link:../concepts/intro.html["Was ist das"]
+* link:../concepts/architecture.html["Verstehen von Architektur und Komponenten"]
+* link:../get-started/requirements.html["Was Sie benötigen, um zu beginnen"]
+* link:../get-started/install_acc.html["Installieren"] Und link:../get-started/setup_overview.html["Einrichtung"]
+* link:../use/manage-apps.html["Managen"] Und link:../use/protect-apps.html["Sichern"] Anwendungen
+* link:../use/manage-buckets.html["Buckets verwalten"] Und link:../use/manage-backend.html["Storage-Back-Ends"]
+* link:../use/manage-users.html["Konten verwalten"]
+* link:../rest-api/api-intro.html["Automatisierung mit API"]
+
+
+
+
+== Weitere Informationen
+
+* link:../release-notes/known-issues.html["Bekannte Probleme in diesem Release"]
+* link:../release-notes/known-limitations.html["Bekannte Einschränkungen für diese Version"]
+* https://docs.netapp.com/us-en/astra-data-store/index.html["Astra Data Store-Dokumentation"]
+* link:../acc-earlier-versions.html["Frühere Versionen der Astra Control Center-Dokumentation"]
+
