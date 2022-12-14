@@ -16,25 +16,25 @@ Bekannte Probleme identifizieren Probleme, die Sie daran hindern könnten, diese
 
 Die folgenden bekannten Probleme wirken sich auf die aktuelle Version aus:
 
-*  with user-defined label goes into "removed" state
-*  to stop running app backup
-*  app restore from backup Trident creates a larger PV than the original PV
-*  performance impacted by large persistent volumes
-*  clones fail using a specific version of PostgreSQL
-*  clones fail when using Service Account level OCP Security Context Constraints (SCC)
-*  buckets between instances of Astra Control Center causes failures
-*  a bucket provider type with credentials for another type causes data protection failures
-*  and snapshots might not be retained during removal of an Astra Control Center instance
+* <<App mit benutzerdefiniertem Label geht in den Status „entfernt“>>
+* <<App-Backup kann nicht beendet werden>>
+* <<Trident erstellt während der Wiederherstellung der App aus einem Backup ein größeres PV als das ursprüngliche PV>>
+* <<Performance-Beeinträchtigung des Klons durch große persistente Volumes>>
+* <<Applikationsklone können nicht mit einer bestimmten Version von PostgreSQL verwendet werden>>
+* <<Anwendungsklone sind bei der Verwendung von OCP-Sicherheitskontextsensitonen (SCC) auf Servicekontoebene fehlgeschlagen.>>
+* <<Die Wiederverwendung von Buckets zwischen den Instanzen des Astra Control Centers verursacht Fehler>>
+* <<Wenn Sie einen Bucket-Provider-Typ mit Zugangsdaten für einen anderen Typ auswählen, führt dies zu Fehlern bei der Datensicherung>>
+* <<Backups und Snapshots werden während der Entfernung einer Astra Control Center-Instanz nicht aufbewahrt>>
 * link:known-issues.html#clone-operation-cant-use-other-buckets-besides-the-default["Der Klonvorgang kann außer dem Standard keine anderen Buckets verwenden"]
-*  a cluster with Astra Control Center fails when default kubeconfig file contains more than one context
-*  internal service error when attempting Trident app data management
-*  app execution hook scripts time out and cause post-snapshot scripts not to execute
+* <<Das Verwalten eines Clusters mit Astra Control Center schlägt fehl, wenn die standardmäßige kubeconfig-Datei mehr als einen Kontext enthält>>
+* <<500 interner Servicefehler beim Versuch, das Management von Trident-App-Daten zu starten>>
+* <<Hook-Skripte für benutzerdefinierte Anwendungsausführungen haben Zeit und verursachen, dass Skripte nach dem Snapshot nicht ausgeführt werden>>
 * link:known-issues.html#cant-determine-asup-tar-bundle-status-in-scaled-environment["In skalierten Umgebungen kann der ASUP tar-Bundle-Status nicht ermittelt werden"]
-*  eventually begin to fail when using external-snapshotter version 4.2.0
-*  app restore operations in the same namespace can fail
-*  fails if source version uses a container image registry that does not require authentication and target version uses a container image registry that requires authentication
-*  of Astra Control Center fails to clean up the monitoring-operator pod on the managed cluster
-*  of Astra Control Center fails to clean up Traefik CRDs
+* <<Snapshots beginnen schließlich beim Einsatz von External-Snapshotter Version 4.2.0 fehlschlagen>>
+* <<Gleichzeitige Applikations-Wiederherstellungsvorgänge können im selben Namespace fehlschlagen>>
+* <<Das Upgrade schlägt fehl, wenn die Quellversion eine Container-Image-Registrierung verwendet, die keine Authentifizierung erfordert. Die Zielversion verwendet eine Container-Image-Registrierung, die eine Authentifizierung erfordert>>
+* <<Bei der Deinstallation des Astra Control Center wird der Monitor-Operator POD im Managed Cluster nicht bereinigt>>
+* <<Bei der Deinstallation von Astra Control Center werden die Traefik CRDs nicht bereinigt>>
 
 
 
@@ -99,7 +99,7 @@ Wenn Sie über eine Evaluierungslizenz verfügen, sollten Sie Ihre Konto-ID spei
 
 
 
-== Der Klonvorgang kann neben dem Standard keine anderen Buckets verwenden
+== Der Klonvorgang kann außer dem Standard keine anderen Buckets verwenden
 
 Während eines Applikations-Backups oder Applikations-Restores können Sie optional eine Bucket-ID angeben. Ein Applikationsklonvorgang verwendet jedoch immer den definierten Standard-Bucket. Es besteht keine Möglichkeit, die Buckets für einen Klon zu ändern. Wenn Sie die Kontrolle darüber haben möchten, welcher Bucket verwendet wird, können Sie entweder link:../use/manage-buckets.html#edit-a-bucket["Ändern Sie den Bucket-Standard"] Oder machen Sie ein link:../use/protect-apps.html#create-a-backup["Backup"] Gefolgt von A link:../use/restore-apps.html["Wiederherstellen"] Separat.
 
@@ -125,7 +125,7 @@ Da Testsuitehingel die Funktionalität der Anwendung, für die sie ausgeführt w
 
 
 
-== In skalierten Umgebungen kann der ASUP tar-Paketstatus nicht ermittelt werden
+== In skalierten Umgebungen kann der ASUP tar-Bundle-Status nicht ermittelt werden
 
 Während der ASUP Sammlung wird der Status des Bundles in der UI als entweder gemeldet `collecting` Oder `done`. Die Sammlung kann in großen Umgebungen bis zu einer Stunde dauern. Während des ASUP Downloads reicht die Übertragungsgeschwindigkeit der Netzwerkdatei für das Bundle möglicherweise nicht aus, und der Download kann nach 15 Minuten ohne Angabe im UI außerhalb der Zeit erfolgen. Download-Probleme hängen von der Größe des ASUP, der skalierten Cluster-Größe und ab, ob die Erfassungszeit das siebentägige Limit übersteigt.
 

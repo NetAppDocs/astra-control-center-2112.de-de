@@ -64,7 +64,7 @@ metadata:
 
 
 
-== Astra Control Center zeigt das vorab-Storage-Backend Astra Data Store in Unknown Status
+== Astra Control Center zeigt das vorab-Storage-Backend für Astra Data Store in `Unknown` Bundesland
 
 Astra Control Center zeigt das vorab-Storage-Backend für den Astra Data Store in einem `Unknown` Status auf der Seite Back Ends in der UI. In diesem Fall ist das Storage Backend tatsächlich verfügbar und kann kommuniziert werden. Eine Komponente im Speicher-Backend ist wahrscheinlich in einem ungesunden Zustand und muss wieder in einen gesunden Zustand versetzt werden, damit das Speicher-Backend als angezeigt wird `available`.
 

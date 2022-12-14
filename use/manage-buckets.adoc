@@ -39,7 +39,7 @@ Anweisungen zum Verwalten von Buckets mithilfe der Astra Control API finden Sie 
 Sie können die folgenden Aufgaben zum Verwalten von Buckets ausführen:
 
 * link:../get-started/setup_overview.html#add-a-bucket["Fügen Sie einen Bucket hinzu"]
-*  a bucket
+* <<Bearbeiten eines Buckets>>
 
 
 

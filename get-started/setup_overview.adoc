@@ -14,10 +14,10 @@ summary: Nach der Installation von Astra Control Center, melden Sie sich in der 
 Astra Control Center unterstützt und überwacht ONTAP und Astra Data Store als Storage-Backend. Nach der Installation von Astra Control Center, melden Sie sich in der UI an und ändern Sie Ihr Passwort, Sie möchten eine Lizenz einrichten, Cluster hinzufügen, Speicher verwalten und Buckets hinzufügen.
 
 .Aufgaben
-*  a license for Astra Control Center
-*  cluster
-*  a storage backend
-*  a bucket
+* <<Fügen Sie eine Lizenz für Astra Control Center hinzu>>
+* <<Cluster hinzufügen>>
+* <<Fügen Sie ein Storage-Back-End hinzu>>
+* <<Fügen Sie einen Bucket hinzu>>
 
 
 
@@ -26,6 +26,7 @@ Astra Control Center unterstützt und überwacht ONTAP und Astra Data Store als 
 
 Sie können eine neue Lizenz über die UI oder hinzufügen https://docs.netapp.com/us-en/astra-automation/index.html["API"^] Um die Funktionalität des Astra Control Center voll zu nutzen. Ohne Lizenz ist Ihre Verwendung von Astra Control Center auf das Management von Benutzern und das Hinzufügen neuer Cluster beschränkt.
 
+.Was Sie benötigen
 Wenn Sie Astra Control Center von heruntergeladen https://mysupport.netapp.com/site/products/all/details/astra-control-center/downloads-tab["NetApp Support Website"^], Sie haben auch die NetApp Lizenzdatei (NLF) heruntergeladen. Stellen Sie sicher, dass Sie Zugriff auf diese Lizenzdatei haben.
 
 
@@ -104,6 +105,7 @@ image:cluster-storage.png["Zeigt die Storage-Klasse, die für das Cluster verwen
 . Überprüfen Sie die Informationen, und wenn alles gut aussieht, wählen Sie *Cluster hinzufügen*.
 
 
+.Ergebnis
 Der Cluster wechselt in den *Entdeckungs*-Status und dann in *running*. Sie haben erfolgreich ein Kubernetes-Cluster hinzugefügt und verwalten es jetzt im Astra Control Center.
 
 
@@ -117,7 +119,7 @@ Sie können ein Storage-Backend hinzufügen, sodass Astra Control die Ressourcen
 
 Sie können ein ermittelte Speicher-Backend hinzufügen, indem Sie die Eingabeaufforderungen aus dem Dashboard oder dem Menü „Backend“ aufrufen.
 
-.Was Sie und#8217;ll benötigen
+.Was Sie benötigen
 * Das ist schon link:../get-started/setup_overview.html#add-cluster["Hat einen Cluster hinzugefügt"] Und das Management erfolgt durch Astra Control.
 +
 
@@ -214,7 +216,7 @@ TIP: Der Bucket-Name und die Beschreibung erscheinen als Backup-Speicherort, den
 
 NOTE: Diese Option wird nicht für den ersten von Ihnen erstellten Bucket angezeigt.
 
-.. Mit Hinzufügen fortfahren  S3 access credentials,Anmeldeinformationen.
+.. Mit Hinzufügen fortfahren <<Fügen Sie S3-Zugriffsdaten hinzu,Anmeldeinformationen>>.
 
 
 

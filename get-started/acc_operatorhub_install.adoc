@@ -15,7 +15,7 @@ Wenn Sie Red hat OpenShift verwenden, können Sie Astra Control Center mithilfe 
 
 Nach Abschluss dieses Verfahrens müssen Sie zum Installationsvorgang zurückkehren, um den abzuschließen link:../get-started/install_acc.html#verify-system-status["Verbleibende Schritte"] Um die erfolgreiche Installation zu überprüfen, und melden Sie sich an.
 
-.Was Sie und#8217;ll benötigen
+.Was Sie benötigen
 * link:requirements.html["Bevor Sie mit der Installation beginnen, bereiten Sie Ihre Umgebung auf die Implementierung des Astra Control Center vor"].
 * Stellen Sie in Ihrem OpenShift-Cluster sicher, dass sich alle Clusterbetreiber in einem ordnungsgemäßen Zustand befinden (`available` Ist `true`):
 +
@@ -34,12 +34,12 @@ oc get apiservices
 
 
 .Schritte
-*  the Astra Control Center bundle
-*  the bundle and change directory
-*  the images to your local registry
-*  the operator install page
-*  the operator
-*  Astra Control Center
+* <<Laden Sie das Astra Control Center Bundle herunter>>
+* <<Packen Sie das Paket aus und ändern Sie das Verzeichnis>>
+* <<Fügen Sie die Bilder Ihrer lokalen Registrierung hinzu>>
+* <<Suchen Sie die Installationsseite des Bedieners>>
+* <<Installieren Sie den Operator>>
+* <<Installieren Sie Astra Control Center>>
 
 
 
@@ -216,6 +216,6 @@ NOTE: Wenn Sie eine manuelle Genehmigungsstrategie ausgewählt haben, werden Sie
 
 
 
-== Was kommt als Nächstes
+== Wie es weiter geht
 
 Überprüfen Sie die erfolgreiche Installation von Astra Control Center und führen Sie die link:../get-started/install_acc.html#verify-system-status["Verbleibende Schritte"] Um sich anzumelden. Darüber hinaus wird die Implementierung abgeschlossen, indem Sie auch die Ausführung durchführen link:setup_overview.html["Setup-Aufgaben"].
