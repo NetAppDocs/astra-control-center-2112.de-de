@@ -199,7 +199,7 @@ Die Betriebsumgebung, die als Host für Astra Control Center fungiert, kommunizi
 | Astra Control Center | Amazon S3 Storage-Bucket-Provider  | 443 | HTTPS | Amazon S3 Storage-Kommunikation 
 
 
-| Astra Control Center | NetApp Active IQ  | 443 | HTTPS | NetApp Active IQ Kommunikation 
+| Astra Control Center | Digital Advisor (https://activeiq.solidfire.com[]) | 443 | HTTPS | Digital Advisor-Kommunikation 
 |===
 
 
